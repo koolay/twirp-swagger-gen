@@ -18,13 +18,25 @@ import (
 
 var _ = spew.Dump
 
-var allowedValues = []string{
-	"boolean",
-	"integer",
-	"number",
-	"object",
-	"string",
-}
+var (
+	Version   string
+	GitCommit string
+	BuildTime string
+
+	// flags
+	in              string
+	out             string
+	host            string
+	twirpPathPrefix string
+
+	allowedValues = []string{
+		"boolean",
+		"integer",
+		"number",
+		"object",
+		"string",
+	}
+)
 
 type SwaggerWriter struct {
 	*spec.Swagger
@@ -369,12 +381,7 @@ func parse(hostname, filename, pathPrefix, output string) error {
 }
 
 func main() {
-	var (
-		in              string
-		out             string
-		host            string
-		twirpPathPrefix string
-	)
+	fmt.Println("twirp-swagger-gen version:", Version, BuildTime, GitCommit)
 
 	flag.StringVar(&in, "in", "", "Input source .proto file")
 	flag.StringVar(&out, "out", "", "Output swagger.json file")
